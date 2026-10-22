@@ -21,6 +21,39 @@ namespace BarberShop.Api.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("BarberBarberService", b =>
+                {
+                    b.Property<int>("BarberID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ServicesID")
+                        .HasColumnType("int");
+
+                    b.HasKey("BarberID", "ServicesID");
+
+                    b.HasIndex("ServicesID");
+
+                    b.ToTable("BarberBarberService");
+                });
+
+            modelBuilder.Entity("BarberShop.Api.Models.Barber", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Barbers");
+                });
+
             modelBuilder.Entity("BarberShop.Api.Models.BarberService", b =>
                 {
                     b.Property<int>("ID")
@@ -67,6 +100,21 @@ namespace BarberShop.Api.Migrations
                             Name = "Стрижка + борода",
                             Price = 1700m
                         });
+                });
+
+            modelBuilder.Entity("BarberBarberService", b =>
+                {
+                    b.HasOne("BarberShop.Api.Models.Barber", null)
+                        .WithMany()
+                        .HasForeignKey("BarberID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BarberShop.Api.Models.BarberService", null)
+                        .WithMany()
+                        .HasForeignKey("ServicesID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

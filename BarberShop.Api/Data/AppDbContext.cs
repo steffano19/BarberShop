@@ -11,6 +11,7 @@ public class AppDbContext : DbContext
     }
 
     public DbSet<BarberService> Services => Set<BarberService>();
+    public DbSet<Barber> Barbers => Set<Barber>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -18,6 +19,10 @@ public class AppDbContext : DbContext
             .Property(s => s.Price)
             .HasPrecision(10, 2);
 
+
+        modelBuilder.Entity<Barber>()
+            .HasMany(b => b.Services)
+            .WithMany();
 
         modelBuilder.Entity<BarberService>().HasData(
             new BarberService { ID = 1, Name = "Мужская стрижка", Price = 1200, DurationMinutes = 45 },
