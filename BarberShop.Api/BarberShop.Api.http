@@ -1,0 +1,5 @@
+@BarberShop.Api_HostAddress = http://localhost:5137
+
+Accept: application/json
+
+###
