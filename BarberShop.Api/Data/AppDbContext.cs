@@ -12,6 +12,7 @@ public class AppDbContext : DbContext
 
     public DbSet<BarberService> Services => Set<BarberService>();
     public DbSet<Barber> Barbers => Set<Barber>();
+    public DbSet<Appointment> Appointments => Set<Appointment>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
