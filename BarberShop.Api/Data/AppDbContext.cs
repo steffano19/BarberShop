@@ -13,6 +13,7 @@ public class AppDbContext : DbContext
     public DbSet<BarberService> Services => Set<BarberService>();
     public DbSet<Barber> Barbers => Set<Barber>();
     public DbSet<Appointment> Appointments => Set<Appointment>();
+    public DbSet<User> Users => Set<User>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -24,6 +25,10 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Barber>()
             .HasMany(b => b.Services)
             .WithMany();
+
+        modelBuilder.Entity<User>()
+            .HasIndex(u => u.Phone)
+            .IsUnique();
 
         modelBuilder.Entity<BarberService>().HasData(
             new BarberService { ID = 1, Name = "Мужская стрижка", Price = 1200, DurationMinutes = 45 },
